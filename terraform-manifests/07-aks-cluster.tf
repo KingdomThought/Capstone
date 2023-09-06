@@ -44,7 +44,7 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   }
 
 # RBAC and Azure AD Integration Block
-role_based_access_control {
+role_based_access_control_enabled {
   enabled = true
   azure_active_directory {
     managed                = true
