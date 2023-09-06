@@ -32,7 +32,7 @@ stages:
               workingDirectory: '$(System.DefaultWorkingDirectory)/terraform-manifests'
               backendServiceArm: 'capstone-svc-conn'
               backendAzureRmResourceGroupName: 'terraform-storage-rg'
-              backendAzureRmStorageAccountName: 'terraformstatestoragevvk'
+              backendAzureRmStorageAccountName: 'terraformstatedelano'
               backendAzureRmContainerName: 'tfstatefiles'
               backendAzureRmKey: 'aks-terraform.tfstate'
           - task: TerraformCLI@0
@@ -65,7 +65,7 @@ stages:
                     workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
                     backendServiceArm: 'capstone-svc-conn'
                     backendAzureRmResourceGroupName: 'terraform-storage-rg'
-                    backendAzureRmStorageAccountName: 'terraformstatestoragevvk'
+                    backendAzureRmStorageAccountName: 'terraformstatedelano'
                     backendAzureRmContainerName: 'tfstatefiles'
                     backendAzureRmKey: 'aks-$(DEV_ENVIRONMENT).tfstate'
                     allowTelemetryCollection: false
@@ -85,3 +85,4 @@ stages:
                     environmentServiceNameAzureRM: 'capstone-svc-conn'
                     commandOptions: '$(Pipeline.Workspace)/terraform-manifests-out/$(DEV_ENVIRONMENT)-$(Build.BuildId).out'
                     allowTelemetryCollection: false
+
