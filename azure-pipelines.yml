@@ -10,7 +10,7 @@ variables:
   - name: DEV_ENVIRONMENT
     value: delano
   - name: dockerRegistryServiceConnection
-    value: 'delanodocker'
+    value: 'DelCapDockConn'
   - name: imageRepository
     value: 'Socio-Sync'
   - name: containerRegistry
