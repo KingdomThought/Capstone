@@ -1,7 +1,6 @@
 # Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+# Customize this pipeline to build and deploy your code.
+# For more steps and examples: https://aka.ms/yaml
 
 pool:
   vmImage: ubuntu-latest
@@ -36,7 +35,8 @@ stages:
               containerRegistry: $(dockerRegistryServiceConnection)
               tags: |
                 $(tag)
-                
+                latest
+
   - stage: TerraformValidate
     jobs:
       - job: TerraformValidateJob
