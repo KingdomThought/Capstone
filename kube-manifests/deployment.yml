@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: socio-sync-container
-        image: delanocapstone.azurecr.io/socio-sync:latest
+        image: delanocapstone.azurecr.io/socio-sync
         ports:
         - containerPort: 3000
       imagePullSecrets:
