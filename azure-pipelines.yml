@@ -10,7 +10,7 @@ variables:
   - name: DEV_ENVIRONMENT
     value: delano
   - name: dockerRegistryServiceConnection
-    value: 'delanocapstoneregistry'
+    value: 'delanodocker'
   - name: imageRepository
     value: 'Socio-Sync'
   - name: containerRegistry
@@ -33,7 +33,7 @@ stages:
               command: 'buildAndPush'
               repository: $(imageRepository)
               dockerfile: $(dockerfilePath)
-              containerRegistry: $(dockerRegistryServiceConnection)
+              containerRegistry: $(delanodocker)
               tags: |
                 $(tag)
                 
