@@ -16,10 +16,8 @@ spec:
     spec:
       containers:
       - name: socio-sync-container
-        image: delanocapstone.azurecr.io/socio-sync
+        image: delanocapstone.azurecr.io/socio-sync:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 3000
-        imagePullPolicy: Always
-      imagePullSecrets:
-      - name: acr-auth
 
