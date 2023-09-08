@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "nextjs-app"
+  name: "socio-sync-app"
   labels:
-    app: "nextjs-app"
+    app: "socio-sync-app"
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: "nextjs-app"
+      app: "socio-sync-app"
   template:
     metadata:
       labels:
-        app: "nextjs-app"
+        app: "socio-sync-app"
     spec:
       containers:
-      - name: nextjs-container
-        image: acrrg01.azurecr.io/nextjs-app1:latest
+      - name: socio-sync-container
+        image: delanocapstone.azurecr.io/socio-sync:latest
         ports:
         - containerPort: 3000
