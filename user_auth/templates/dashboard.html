@@ -1,0 +1,86 @@
+{% extends "base_generic2.html" %}
+
+{% load static %}  <!-- Remember to load static to use static files -->
+
+{% block content %}
+    <!-- Banner Area -->
+
+    <div class="banner text-center">
+    <!--    <h1 class="display-4">Socio Sync</h1>
+-->
+
+        <!-- Logo placement with width set to a relative value -->
+        <img src="{% static 'user_auth/img/logo.png' %}" alt="Logo" style="width: 15%;">
+
+    </div>
+
+    <h2 class="text-center">Hello {{ user.username }}, Welcome</h2>
+
+    <div class="d-flex justify-content-center mb-3">
+        <button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'contact_create' %}'">Add New Contact</button>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Relationship</th>
+                    <th scope="col">Frequency</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for contact in contacts %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ contact.name }}</td>
+                    <td>{{ contact.relationship }}</td>
+                    <td>{{ contact.frequency }}</td>
+                    <td>
+                        <button type="button" class="btn btn-secondary" onclick="window.location.href='{% url 'edit_contact' contact.id %}'">Edit</button>
+                        <button type="button" class="btn btn-danger" onclick="window.location.href='{% url 'delete_contact' contact.id %}'">Delete</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="d-flex justify-content-center mt-3">
+        <nav aria-label="Contacts pagination">
+            <ul class="pagination">
+                {% if contacts.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ contacts.previous_page_number }}">Previous</a>
+                </li>
+                {% endif %}
+
+                {% for page in contacts.paginator.page_range %}
+                {% if contacts.number == page %}
+                <li class="page-item active">
+                    <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+                </li>
+                {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+                </li>
+                {% endif %}
+                {% endfor %}
+
+                {% if contacts.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ contacts.next_page_number }}">Next</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center">
+
+    </footer>
+{% endblock %}
