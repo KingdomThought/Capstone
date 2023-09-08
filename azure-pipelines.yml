@@ -9,8 +9,34 @@ pool:
 variables:
   - name: DEV_ENVIRONMENT
     value: delano
+  - name: dockerRegistryServiceConnection
+    value: 'delanocapstoneregistry'
+  - name: imageRepository
+    value: 'Socio-Sync'
+  - name: containerRegistry
+    value: 'delanocapstone.azurecr.io'
+  - name: dockerfilePath
+    value: '$(System.DefaultWorkingDirectory)/Dockerfile'
+  - name: tag
+    value: '$(Build.BuildId)'
 
 stages:
+  - stage: BuildAndPushDocker
+    displayName: Build and push Docker image
+    jobs:
+      - job: BuildDocker
+        displayName: Build Docker
+        steps:
+          - task: Docker@2
+            displayName: Build and push an image to container registry
+            inputs:
+              command: 'buildAndPush'
+              repository: $(imageRepository)
+              dockerfile: $(dockerfilePath)
+              containerRegistry: $(dockerRegistryServiceConnection)
+              tags: |
+                $(tag)
+                
   - stage: TerraformValidate
     jobs:
       - job: TerraformValidateJob
@@ -23,7 +49,6 @@ stages:
               targetPath: '$(System.DefaultWorkingDirectory)/terraform-manifests'
               artifact: 'terraform-manifests-out'
               publishLocation: 'pipeline'
-              
           # Publishing Kube-Manifests
           - task: PublishPipelineArtifact@1
             displayName: Publish Kube-Manifest Artifacts
@@ -31,7 +56,6 @@ stages:
               targetPath: '$(System.DefaultWorkingDirectory)/kube-manifests'
               artifact: 'kube-manifests-out'
               publishLocation: 'pipeline'
-
           - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
             inputs:
               terraformVersion: 'latest'
