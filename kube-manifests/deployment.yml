@@ -19,6 +19,7 @@ spec:
         image: delanocapstone.azurecr.io/socio-sync
         ports:
         - containerPort: 3000
+        imagePullPolicy: Always
       imagePullSecrets:
       - name: acr-auth
 
