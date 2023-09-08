@@ -33,7 +33,7 @@ stages:
               command: 'buildAndPush'
               repository: $(imageRepository)
               dockerfile: $(dockerfilePath)
-              containerRegistry: $(delanodocker)
+              containerRegistry: $(dockerRegistryServiceConnection)
               tags: |
                 $(tag)
                 
