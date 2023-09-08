@@ -20,4 +20,7 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 3000
+      imagePullSecrets:
+      - name: my-acr-secret
+
 
