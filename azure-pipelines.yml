@@ -13,9 +13,9 @@ variables:
   - name: dockerHubServiceConnection
     value: 'DockerHubServiceConnection' 
   - name: imageRepositoryAzure
-    value: 'socio-sync'  # Changed to lowercase as per Docker naming standards
+    value: 'socio-sync'  # Docker naming standards require lowercase
   - name: imageRepositoryDockerHub
-    value: 'Kingmaven/socio-sync' # This should remain as is, only the repository name should be lowercase.
+    value: 'kingmaven/socio-sync' # The username can remain in mixed-case, but repository should be lowercase.
   - name: dockerfilePath
     value: '$(System.DefaultWorkingDirectory)/Dockerfile'
   - name: tag
