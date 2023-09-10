@@ -8,12 +8,14 @@ pool:
 variables:
   - name: DEV_ENVIRONMENT
     value: delano
-  - name: dockerRegistryServiceConnection
+  - name: azureDockerRegistryServiceConnection
     value: 'DelCapDockConn'
-  - name: imageRepository
+  - name: dockerHubServiceConnection
+    value: 'DockerHubServiceConnection' # Assuming you've set up a Docker Hub service connection in Azure DevOps
+  - name: imageRepositoryAzure
     value: 'Socio-Sync'
-  - name: containerRegistry
-    value: 'delanocapstone.azurecr.io'
+  - name: imageRepositoryDockerHub
+    value: 'Kingmaven/socio-sync'
   - name: dockerfilePath
     value: '$(System.DefaultWorkingDirectory)/Dockerfile'
   - name: tag
@@ -27,12 +29,23 @@ stages:
         displayName: Build Docker
         steps:
           - task: Docker@2
-            displayName: Build and push an image to container registry
+            displayName: Build and push an image to Azure ACR
             inputs:
               command: 'buildAndPush'
-              repository: $(imageRepository)
+              repository: $(imageRepositoryAzure)
               dockerfile: $(dockerfilePath)
-              containerRegistry: $(dockerRegistryServiceConnection)
+              containerRegistry: $(azureDockerRegistryServiceConnection)
+              tags: |
+                $(tag)
+                latest
+
+          - task: Docker@2
+            displayName: Push the image to Docker Hub
+            inputs:
+              command: 'push'
+              repository: $(imageRepositoryDockerHub)
+              dockerfile: $(dockerfilePath)
+              containerRegistry: $(dockerHubServiceConnection)
               tags: |
                 $(tag)
                 latest
