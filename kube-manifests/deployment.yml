@@ -1,26 +1,32 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: "socio-sync-app"
-  labels:
-    app: "socio-sync-app"
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: "socio-sync-app"
-  template:
-    metadata:
-      labels:
-        app: "socio-sync-app"
-    spec:
-      containers:
-      - name: socio-sync-container
-        image: kingmaven/socio-sync:latest 
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 3000
-    
+# This file defines a Kubernetes Deployment manifest. Deployments are a high-level construct 
+# in Kubernetes that manage the desired state for pods and ReplicaSets.
+
+apiVersion: apps/v1  # Specifies the API version to use, "apps/v1" is the version for stateful scalable objects.
+kind: Deployment  # Indicates the kind of Kubernetes object we're defining. In this case, a Deployment.
+
+metadata:  # Metadata for the object, like name, labels, etc.
+  name: "socio-sync-app"  # Name of the Deployment.
+  labels:  # Labels are key-value pairs attached to objects and can be used for organizing and selecting subsets of objects.
+    app: "socio-sync-app"  # A label named "app" with the value "socio-sync-app".
+
+spec:  # Specifications of the desired behavior for this Deployment.
+  replicas: 3  # The Deployment will maintain 3 replicas (or copies) of the pod.
+  selector:  # Selector is used to select the pods that the Deployment should manage.
+    matchLabels:  # The labels to match the pods that this Deployment should manage.
+      app: "socio-sync-app"  # The Deployment will manage pods with label "app" having value "socio-sync-app".
+
+  template:  # Defines the pod specification. This is the blueprint for pods.
+    metadata:  # Metadata for the pod.
+      labels:  # Labels to be added to the pod.
+        app: "socio-sync-app"  # A label named "app" with the value "socio-sync-app".
+    spec:  # Specifications for the containers and volumes for the pod.
+      containers:  # List of containers to be launched in the pod.
+      - name: socio-sync-container  # Name of the container.
+        image: kingmaven/socio-sync:latest  # Image to be used for this container, pulling the latest version.
+        imagePullPolicy: Always  # Always pull the image, even if it's locally available.
+        ports:  # List of ports to expose from the container.
+        - containerPort: 3000  # The container will listen on port 3000.
+
 
 
 
