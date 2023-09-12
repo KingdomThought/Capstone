@@ -1,27 +1,28 @@
-# Starter pipeline
-# Customize this pipeline to build and deploy your code.
-# For more steps and examples: https://aka.ms/yaml
+# This is an Azure DevOps Pipeline defined in YAML.
+# The pipeline is designed to build Docker images, push them to Azure ACR and Docker Hub, validate Terraform configurations, and deploy AKS clusters.
 
+# Here, the pipeline specifies which virtual machine image to use for its jobs.
 pool:
-  vmImage: ubuntu-latest
+  vmImage: ubuntu-latest  # Use the latest Ubuntu image for the virtual machine.
 
+# Define a series of variables that will be used throughout the pipeline.
 variables:
   - name: DEV_ENVIRONMENT
-    value: delano
+    value: delano  # Name of the development environment.
   - name: azureDockerRegistryServiceConnection
-    value: 'DelCapDockConn'
+    value: 'DelCapDockConn'  # Service connection for Azure Docker Registry.
   - name: dockerHubServiceConnection
-    value: 'DockerHubServiceConnection' 
+    value: 'DockerHubServiceConnection'  # Service connection for Docker Hub.
   - name: imageRepositoryAzure
-    value: 'socio-sync'  # Docker naming standards require lowercase
+    value: 'socio-sync'  # Repository name in Azure (names should be lowercase due to Docker's naming standard).
   - name: imageRepositoryDockerHub
-    value: 'kingmaven/socio-sync' # The username can remain in mixed-case, but repository should be lowercase.
+    value: 'kingmaven/socio-sync'  # Repository name in Docker Hub (username can remain mixed-case).
   - name: dockerfilePath
-    value: '$(System.DefaultWorkingDirectory)/Dockerfile'
+    value: '$(System.DefaultWorkingDirectory)/Dockerfile'  # Path to the Dockerfile.
   - name: tag
-    value: '$(Build.BuildId)'
+    value: '$(Build.BuildId)'  # Use the build ID as a tag for the Docker image.
 
-
+# The first stage of the pipeline. This builds and pushes a Docker image to Azure Container Registry (ACR).
 stages:
   - stage: BuildAndPushToACR
     displayName: Build and push Docker image to ACR
@@ -40,6 +41,7 @@ stages:
                 $(tag)
                 latest
 
+# The second stage. This builds and pushes a Docker image to Docker Hub.
   - stage: BuildAndPushToDockerHub
     displayName: Build and push Docker image to Docker Hub
     jobs:
@@ -57,19 +59,20 @@ stages:
                 $(tag)
                 latest
 
+# The third stage. This validates Terraform configurations and publishes some artifacts.
   - stage: TerraformValidate
     jobs:
       - job: TerraformValidateJob
-        continueOnError: false
+        continueOnError: false  # If this job fails, don't continue to the next steps.
         steps:
-          # Publishing Terraform manifests
+          # Publishing Terraform manifests.
           - task: PublishPipelineArtifact@1
             displayName: Publish Terraform Artifacts
             inputs:
               targetPath: '$(System.DefaultWorkingDirectory)/terraform-manifests'
               artifact: 'terraform-manifests-out'
               publishLocation: 'pipeline'
-          # Publishing Kube-Manifests
+          # Publishing Kubernetes manifests.
           - task: PublishPipelineArtifact@1
             displayName: Publish Kube-Manifest Artifacts
             inputs:
@@ -96,6 +99,7 @@ stages:
               workingDirectory: '$(System.DefaultWorkingDirectory)/terraform-manifests'
               allowTelemetryCollection: false
 
+# The final stage. This deploys Azure Kubernetes Service (AKS) clusters.
   - stage: DeployAKSClusters
     jobs:
       - deployment: DeployDevAKSCluster
@@ -139,3 +143,4 @@ stages:
                     environmentServiceNameAzureRM: 'capstone-svc-conn'
                     commandOptions: '$(Pipeline.Workspace)/terraform-manifests-out/$(DEV_ENVIRONMENT)-$(Build.BuildId).out'
                     allowTelemetryCollection: false
+
