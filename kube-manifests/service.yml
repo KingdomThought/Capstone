@@ -1,16 +1,19 @@
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app: "socio-sync-app"
-  name: "socio-sync-app"
-spec:
-  ports:
-    - port: 80
-      protocol: TCP
-      targetPort: 8000
-  selector:
-    app: "socio-sync-app"
-  sessionAffinity: None
-  type: LoadBalancer
+# This file defines a Kubernetes Service manifest. Services are a stable endpoint for pods to communicate.
 
+apiVersion: v1  # Specifies the API version to use. "v1" is the base version of the Kubernetes API.
+kind: Service  # Indicates the kind of Kubernetes object we're defining. In this case, a Service.
+
+metadata:  # Metadata for the object, like name, labels, etc.
+  labels:  # Labels are key-value pairs attached to objects and can be used for organizing and selecting subsets of objects.
+    app: "socio-sync-app"  # A label named "app" with the value "socio-sync-app".
+  name: "socio-sync-app"  # Name of the Service.
+
+spec:  # Specifications of the desired behavior for this Service.
+  ports:  # List of ports on which the Service will listen and forward traffic to the selected pods.
+    - port: 80  # The port on which the Service will listen.
+      protocol: TCP  # The network protocol this port listens to (TCP/UDP).
+      targetPort: 8000  # The port on the pod to forward traffic to.
+  selector:  # Selector determines which pods will be targeted by this Service.
+    app: "socio-sync-app"  # The Service will target pods with label "app" having value "socio-sync-app".
+  sessionAffinity: None  # Defines how the Service routes traffic to pods. "None" means no session affinity.
+  type: LoadBalancer  # Specifies the type of the Service. "LoadBalancer" will provision an external IP to act as a load balancer for this Service.
