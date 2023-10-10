@@ -87,7 +87,7 @@ stages:
               provider: 'azurerm'
               command: 'init'
               workingDirectory: '$(System.DefaultWorkingDirectory)/terraform-manifests'
-              backendServiceArm: 'capstone-svc-conn'
+              backendServiceArm: 'terraform_storage'
               backendAzureRmResourceGroupName: 'terraform-storage-rg'
               backendAzureRmStorageAccountName: 'terraformstatedelano'
               backendAzureRmContainerName: 'tfstatefiles'
