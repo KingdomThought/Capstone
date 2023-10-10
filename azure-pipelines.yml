@@ -10,7 +10,7 @@ variables:
   - name: DEV_ENVIRONMENT
     value: delano  # Name of the development environment.
   - name: azureDockerRegistryServiceConnection
-    value: 'DelCapDockConn'  # Service connection for Azure Docker Registry.
+    value: 'docker_sociosync'  # Service connection for Azure Docker Registry.
   - name: dockerHubServiceConnection
     value: 'DockerHubServiceConnection'  # Service connection for Docker Hub.
   - name: imageRepositoryAzure
