@@ -89,7 +89,7 @@ stages:
               workingDirectory: '$(System.DefaultWorkingDirectory)/terraform-manifests'
               backendServiceArm: 'terraform_storage'
               backendAzureRmResourceGroupName: 'terraform-storage-rg'
-              backendAzureRmStorageAccountName: 'terraformstatedelano'
+              backendAzureRmStorageAccountName: 'terraformstatesociosync'
               backendAzureRmContainerName: 'tfstatefiles'
               backendAzureRmKey: 'aks-terraform.tfstate'
           - task: TerraformCLI@0
