@@ -125,7 +125,7 @@ stages:
                     provider: 'azurerm'
                     command: 'init'
                     workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
-                    backendServiceArm: 'capstone-svc-conn'
+                    backendServiceArm: 'terraform_storage'
                     backendAzureRmResourceGroupName: 'terraform-storage-rg'
                     backendAzureRmStorageAccountName: 'terraformstatedelano'
                     backendAzureRmContainerName: 'tfstatefiles'
@@ -136,7 +136,7 @@ stages:
                     provider: 'azurerm'
                     command: 'plan'
                     workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
-                    environmentServiceNameAzureRM: 'capstone-svc-conn'
+                    environmentServiceNameAzureRM: 'terraform_storage'
                     commandOptions: '-var ssh_public_key=$(sshkey.secureFilePath) -var environment=$(DEV_ENVIRONMENT) -out $(Pipeline.Workspace)/terraform-manifests-out/$(DEV_ENVIRONMENT)-$(Build.BuildId).out'
                     allowTelemetryCollection: false
                 - task: TerraformTaskV4@4
@@ -144,7 +144,7 @@ stages:
                     provider: 'azurerm'
                     command: 'apply'
                     workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
-                    environmentServiceNameAzureRM: 'capstone-svc-conn'
+                    environmentServiceNameAzureRM: 'terraform_storage'
                     commandOptions: '$(Pipeline.Workspace)/terraform-manifests-out/$(DEV_ENVIRONMENT)-$(Build.BuildId).out'
                     allowTelemetryCollection: false
 
