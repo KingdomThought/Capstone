@@ -126,8 +126,8 @@ stages:
                     command: 'init'
                     workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
                     backendServiceArm: 'terraform_storage'
-                    backendAzureRmResourceGroupName: 'terraform-storage-rg'
-                    backendAzureRmStorageAccountName: 'terraformstatedelano'
+                    backendAzureRmResourceGroupName: 'terraform_storage_rg'
+                    backendAzureRmStorageAccountName: 'terraformstatesociosync'
                     backendAzureRmContainerName: 'tfstatefiles'
                     backendAzureRmKey: 'aks-$(DEV_ENVIRONMENT).tfstate'
                     allowTelemetryCollection: false
