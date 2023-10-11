@@ -144,7 +144,7 @@ stages:
                     provider: 'azurerm'
                     command: 'apply'
                     workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
-                    environmentServiceNameAzureRM: 'terraform_storage'
+                    environmentServiceNameAzureRM: 'Azure-SVC'
                     commandOptions: '$(Pipeline.Workspace)/terraform-manifests-out/$(DEV_ENVIRONMENT)-$(Build.BuildId).out'
                     allowTelemetryCollection: false
 
