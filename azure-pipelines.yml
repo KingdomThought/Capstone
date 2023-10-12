@@ -88,8 +88,8 @@ stages:
               command: 'init'
               workingDirectory: '$(System.DefaultWorkingDirectory)/terraform-manifests'
               backendServiceArm: 'terraform_storage'
-              backendAzureRmResourceGroupName: 'terraform_storage_rg'
-              backendAzureRmStorageAccountName: 'terraformstatesociosync'
+              backendAzureRmResourceGroupName: 'socio_sync_rg'
+              backendAzureRmStorageAccountName: 'statefilesociosync'
               backendAzureRmContainerName: 'tfstatefiles'
               backendAzureRmKey: 'aks-terraform.tfstate'
           - task: TerraformCLI@0
@@ -126,8 +126,8 @@ stages:
                     command: 'init'
                     workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
                     backendServiceArm: 'terraform_storage'
-                    backendAzureRmResourceGroupName: 'terraform_storage_rg'
-                    backendAzureRmStorageAccountName: 'terraformstatesociosync'
+                    backendAzureRmResourceGroupName: 'socio_sync_rg'
+                    backendAzureRmStorageAccountName: 'statefilesociosync'
                     backendAzureRmContainerName: 'tfstatefiles'
                     backendAzureRmKey: 'aks-$(DEV_ENVIRONMENT).tfstate'
                     allowTelemetryCollection: false
